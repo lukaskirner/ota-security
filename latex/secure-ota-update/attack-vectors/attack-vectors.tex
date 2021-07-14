@@ -1,0 +1,23 @@
+\subsection{Attack Vectors}\label{subsec:attack-vectors}
+Firmware upgrades can be attacked in many ways. This section describes some common attacks.
+
+\subsubsection{Men-in-the-middle}\label{subsubsec:mitm}
+One of the older attacks which can affect a wide range of protocols. In this attack, the attacker pretends to be the requestor's target server. On secure channels like SSL/TLS, the attacker sends a fake certificate to the requestor. If this fake certificate is accepted the men in the middle, the attacker, can then read and monitor the traffic. In the firmware update example, the attacker can do multiple things with this attack. One will be to tamper the firmware during the download process. The other would be to replace the entire firmware to be downloaded \cite{Desmedt2011} \cite{6769681}.
+
+\subsubsection{Insecure software supply chain}
+This attack targets the supply chain of the software vendor. This involves infiltrating the provider's network by the attacker. A successful infiltration can be done by distributing compromised open source code which is used by the vendor. After a successful infiltration, the attacker can then deploy malicious code, which will then be distributed to the vendors costumer \cite{CybersecurityandInfrastructureSecurityAgency2021}. In the firmware case to the vendors devices. 
+
+\subsubsection{Update Server}\label{subsubsec:update-server}
+This is not just a firmware update threat for microcontrollers, it is a more overall threat to any application/firmware which tries to check for updates on a centralized server. The corresponding applications or devices periodically check for new updates on a dedicated server. If attackers get control of this server, they are free to distribute new malicious software or firmware in the case of our microcontroller. One recent attack is the compromisation of a Gigaset update server that distributed malicious software to Gigaset Android devices \cite{Born2021}. 
+
+\subsubsection{Code injection}\label{subsubsec:code-injection}
+Relates to injecting arbitrary malicious program code to the device. This code will then be executed by the device itself \cite{7459331} \cite{Bettayeb2019}. This attack requires additional attacks. The payload must be injected to the target device. One appropriate solution for bringing the malicious code as payload to the device can be the men-in-the-middle (\ref{subsubsec:mitm}) attack, physical access or simply abusing know vulnerabilities of the currently running firmware.
+
+\subsubsection{Unauthorized device}\label{subsubsec:unauthorized-device}
+The hacker plants a new, non-official, device into the network. This device pretends to be a legal device and fetches the firmware of a legal device \cite{Bettayeb2019}. The received firmware can then be checked for vulnerabilities, for example.
+
+\subsubsection{Replay attack}\label{subsubsec:replay-attack}
+The replay attack distributes an old firmware that is known to have vulnerabilities. The known vulnerabilities included in the old firmware can then be used, e.g. to control the device \cite{Adams2011} \cite{Zandberg2019}.
+
+\subsubsection{Physical attack}\label{subsubsec:physical-attack}
+Attacker has physical access to the device. This can be used to either dump the currently running firmware for further analysis, dumping memory for e.g. extracting secrets, for flashing new firmware or injecting code to the running firmware \cite{Lethaby2018}.

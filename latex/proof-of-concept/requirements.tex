@@ -1,0 +1,16 @@
+\subsection{Requirements}
+The following hardware, tools and more is required to run this proof of concept.
+
+\paragraph{Python:} Python 3.8 and above is recommended.
+
+\paragraph{AWS Account:} This example uses AWS to represent the update server. Different AWS services provide the necessary server side protections. A preconfigured aws-cli\footnote{\url{https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html}} is required to set up the infrastructure automatically with the code provided inside the GitHub repository.
+
+\paragraph{Terraform:} Serves as infrastructure as code tool \cite{HashiCorp}. For this example, the developer can automatically set up the required infrastructure at AWS by using the provided terraform files inside the repository. Requires aws-cli!
+
+\paragraph{OpenSSL:} Used to generate certificates and more. Other tools for certificate generation are also applicable.
+
+\paragraph{ESP32:} This example shows how an OTA update process can be implemented on a ESP32. The testing environment for this paper was driven by a ESP32 Dev Kit C V4 NodeMCU but the most ESP32 boards may be compatible. Even different CPU architectures like the ESP32 C3 which uses \textbf{RISC-V} should be compatible.
+
+\paragraph{ESP-IDF:} Espressif IoT Development Framework is the official framework, by Espressif, for ESP32 development.
+
+\paragraph{ESP-IDF VS Code extension (optional):} This extension\footnote{\url{https://marketplace.visualstudio.com/items?itemName=espressif.esp-idf-extension}} for Visual Studio Code simplifies processes with the ESP-IDF like installing, building the project, flashing and attaching to the serial monitor. This extension is not required, but can speed up the entire development process.

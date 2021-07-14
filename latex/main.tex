@@ -1,0 +1,30 @@
+\documentclass[acmsmall,screen,nonacm]{acmart} 
+
+\title{Secure Over-the-air (OTA) firmware updates for microcontrollers like ESP32}
+\author{Lukas Maximilian Kirner}
+\authorsaddresses{lkirner@hm.edu}  
+\acmYear{2021}  
+\copyrightyear{2021}
+
+\include{header}
+
+\begin{abstract}  
+    \input{abstract}
+\end{abstract}
+
+\begin{document} 
+\maketitle
+
+\input{introduction/introduction}
+\input{related-work/related-work}
+\input{methodology/methodology}
+\input{secure-ota-update/secure-ota-update}
+\newpage
+\input{proof-of-concept/proof-of-concept}
+\newpage
+\input{conclusion/conclusion}
+
+\bigskip
+\bibliography{library.bib}
+\bibliographystyle{plainnat}
+\end{document}

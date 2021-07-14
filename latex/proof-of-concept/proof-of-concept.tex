@@ -1,0 +1,30 @@
+\section{Proof of concept}\label{sec:proof-of-concept}
+This section covers an example implementation on how to implement the most prevention techniques mentioned in section \ref{subsec:prevention}. The implementation covers the following prevention techniques which were already explained in the subsection \ref{subsec:prevention}:
+
+\bigskip
+\begin{itemize}
+    \item TLS (\ref{subsubsec:encrypted-transport-channels})
+    \item Certificate pining (\ref{subsubsec:certificate-pinning})
+    \item mTLS (\ref{subsubsec:mutal-tls})
+    \item Code/Image signing (\ref{subsubsec:code-image-signing})
+    \item Versioning (\ref{subsubsec:versioning})
+    \item Rollback mechanism (\ref{subsubsec:rollback-mechanism})
+\end{itemize}
+\bigskip
+
+Flash encryption (\ref{subsubsec:flash-encryption}) and Hardware Security Modules (\ref{subsubsec:hsm}) are not covered due to hardware restrictions of the used ESP32. Flash encryption was dropped due to the possibility of bricking the device in an early development state. Flash encryption can be enabled later with the ESP-IDF configuration menu.
+
+\bigskip
+This example implements the above prevention techniques on a ESP32. The ESP32 will securely download a newer version of its own firmware to replace the old one during reboot. The new firmware is served by an update server. The update server is a compilation of various AWS services and is thus hosted in the public cloud of Amazon Web Services (AWS). Figure \ref{fig:poc-architecture} shows the overall system architecture consisting of the device (the ESP32) and the used AWS services. The "Implementation" subsection \ref{subsec:implementation} explains more about each AWS service and its respective use case.
+
+\bigskip
+\begin{figure}[H]
+    \centering
+    %\includesvg[width=0.8\textwidth]{proof-of-concept/assets/architecture.drawio.svg}
+    \includegraphics[width=0.8\textwidth]{proof-of-concept/assets/architecture.drawio.png}
+    \caption{Basic system architecture}\label{fig:poc-architecture}
+\end{figure}
+
+\newpage
+\input{proof-of-concept/requirements}
+\input{proof-of-concept/implementation}

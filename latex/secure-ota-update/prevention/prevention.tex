@@ -1,0 +1,26 @@
+\subsection{Prevention}\label{subsec:prevention}
+This section covers the prevention techniques which can be used to prevent the attack vectors from section \ref{subsec:attack-vectors}.
+
+\subsubsection{Encrypted transport channels}\label{subsubsec:encrypted-transport-channels}
+Using encryption on transport channels is nothing new and mostly a standard today. Any communication between the device and the OTA update server should be encrypted with common methods like TLS or MQTT with TLS [\href{https://datatracker.ietf.org/doc/html/rfc5246}{RFC5246}]. This will prevent eavesdropping, tampering or message forgery.
+
+\subsubsection{Certificate pinning}\label{subsubsec:certificate-pinning}
+By enforcing secure channels with e.g. TLS men-in-the-middle attacks need to provide a certificate. But in the most cases the attack won't have the certificate of e.g. the update server. Therefor, the attacker needs to provide its own certificate, e.g. self-signed. The first good step here will be to not accept self-signed certificates, but on constrained devices like microcontrollers it is often not possible to include root CAs. One solution to this problem is certificate pinning, which checks the peer's identity by checking against a locally stored certificate \cite{Walton2020}. Therefor, the server certificate must be embedded into the firmware. The device is then capable of checking the servers certificate, upon establishing connection.
+
+\subsubsection{Mutual TLS (mTLS) authentication}\label{subsubsec:mutal-tls}
+With mutual TLS (mTLS) authentication, it can be ensured that non-official devices get access to the OTA update system. Normally, TLS requires the server to authenticate itself to the client but with mutual TLS (mTLS) [\href{https://datatracker.ietf.org/doc/html/rfc8705}{RFC8705}] both, client and server, are authenticated with X.509 certificates \cite{Beswick2020}. Therefor, resources can be protected without relying on authentication schemas like username password.
+
+\subsubsection{Code/Image signing}\label{subsubsec:code-image-signing}
+Signing code or firmware images provides both data integrity and identification of who signed the code. This method can detect modifications on the firmware which, for example, have been inserted subsequently \cite{Cooper2018}. For example, a compromised update server can be tackled with code/image signing. Malicious firmware that is not properly signed can be distributed via the compromised update server, but ultimately has no effect if the devices check the signing when applying the new firmware update. To clarify, the code/image singing won't have any effect if the attacker has access or a copy of the private signing key, therefor the key must be held secret. The corresponding public key must be securely stored on the device itself, for example on a Hardware Security Module (\ref{subsubsec:hsm}).
+
+\subsubsection{Versioning}\label{subsubsec:versioning}
+Versioning of software is nothing new, for example many developers use it by simply using git as version control or by tagging certain commits with git. Tags like v1.0, v1.1 or v2.0 can be used to prevent replay attacks by simply embedding them inside the header/manifest of the firmware. The device can then check if the version of the new image is greater than the version of the currently running firmware. To prevent modification of version string inside the header/manifest code/image signing (\ref{subsubsec:code-image-signing}) should be applied too.
+
+\subsubsection{Flash Encryption}\label{subsubsec:flash-encryption}
+Encrypting the flash prevents attackers from physical readout. Therefore, the firmware cannot be dumped and analyzed for weaknesses \cite{EspressifSystemsShanghaiCo}.
+
+\subsubsection{Rollback mechanism}\label{subsubsec:rollback-mechanism}
+In some cases, faulty firmware gets downloaded like a malicious firmware injected by a man-in-the-middle attack (\ref{subsubsec:mitm}). Methods like code/image signing (\ref{subsubsec:code-image-signing}) have not run yet. For example, if the signature check fails during the boot sequence, the device must be booted back to the original system in order to be operational again. Therefor, a rollback mechanism must be included to handle such scenarios \cite{Bettayeb2019}. The rollback mechanism also prevents bricking of units when severe bugs occur.
+
+\subsubsection{Hardware Security Modules (HSM)}\label{subsubsec:hsm}
+Hardware Security Modules are devices dedicated to performing cryptographic tasks like encryption/decryption \cite{Mavrovouniotis2014}. In the case of OTA firmware updates, HSM's can be used to store the client certificate for mTLS (\ref{subsubsec:mutal-tls}), the derived public key for the code signing (\ref{subsubsec:code-image-signing}) and any other secret which is required by the firmware. Keep in mind, HSM is an extra piece of hardware which is not present on every microcontroller.
